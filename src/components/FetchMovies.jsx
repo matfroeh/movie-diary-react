@@ -41,9 +41,7 @@ const FetchMovies = ({ movies, setMovies }) => {
   // Create the MovieCards
   return movies.map((movie) => {
     return (
-      <div key={movie.id}>
-        <MovieCard movie={movie} />
-      </div>
+        <MovieCard key={movie.id} movie={movie} />
     );
   });
 };

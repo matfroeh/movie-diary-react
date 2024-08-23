@@ -7,11 +7,13 @@ function App() {
 
   return (
     <>
-      <div>
+      <div className="bg-indigo-600 bg-cover" 
+      style={{backgroundImage: `url('./Background.svg')`
+      }}>
         {/* <NavBar /> */}
         {/* <SearchBar /> */}
         <div
-          className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-10"
+          className="grid sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4 px-6 py-6"
           id="card-container"
         >
           <FetchMovies movies={movies} setMovies={setMovies} />
