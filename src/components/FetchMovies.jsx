@@ -2,13 +2,13 @@ import { useEffect } from "react";
 import MovieCard from "./MovieCard";
 
 // FetchMovies component that sets the movies state handled down from App
-const FetchMovies = ({ movies, setMovies }) => {
+const FetchMovies = ({ movies, setMovies, query }) => {
   const apiKey = "434cdc6115c1cdc4355e3178cc63535a";
 
   useEffect(() => {
     let ignore = false;
     // Query needs to be adapted to switch between the different kinds of movie lists that should be fetched
-    const getMovies = async (query = "") => {
+    const getMovies = async () => {
       try {
         const url = query
           ? `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}&language=en-US&page=1`
@@ -32,18 +32,17 @@ const FetchMovies = ({ movies, setMovies }) => {
     // Finally, call function
     getMovies();
 
+
     // Clean up
     return () => {
       ignore = true;
     };
-  }, []); // Dependency to be adapted later if necessary
-
+  }, [setMovies, query]); // Dependency on changed query-value
+  
   // Create the MovieCards
   return movies.map((movie) => {
     return (
-      <div key={movie.id}>
-        <MovieCard movie={movie} />
-      </div>
+        <MovieCard key={movie.id} movie={movie} />
     );
   });
 };
