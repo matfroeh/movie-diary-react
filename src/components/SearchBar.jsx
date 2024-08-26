@@ -1,4 +1,5 @@
 const SearchBar = ({ query, setQuery }) => {
+    
   const handleSearch = (e) => {
     e.preventDefault();
     // setQuery("");
