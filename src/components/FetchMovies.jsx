@@ -20,7 +20,7 @@ const FetchMovies = ({ movies, setMovies, query }) => {
         }
         const data = await response.json();
 
-        // Set the movies state. Need to check data format
+        // Set the movies state
         if (!ignore) {
           setMovies(data.results);
         }
@@ -37,7 +37,7 @@ const FetchMovies = ({ movies, setMovies, query }) => {
     return () => {
       ignore = true;
     };
-  }, [setMovies, query]); // Dependency on changed query-value
+  }, [query]); // Dependency on changed query-value
   
   // Create the MovieCards
   return movies.map((movie) => {

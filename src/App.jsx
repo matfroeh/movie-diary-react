@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import FetchMovies from "./components/FetchMovies";
 import SearchBar from "./components/SearchBar";
 
