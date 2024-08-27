@@ -1,13 +1,15 @@
-import { useEffect } from "react";
+
+import { useEffect, useState } from "react";
 import MovieCard from "./MovieCard";
 
-// FetchMovies component that sets the movies state handled down from App
 const FetchMovies = ({ movies, setMovies, query }) => {
   const apiKey = "434cdc6115c1cdc4355e3178cc63535a";
+  const [favorites, setFavorites] = useState(
+    JSON.parse(localStorage.getItem("favorites")) || []
+  );
 
   useEffect(() => {
     let ignore = false;
-    // Query needs to be adapted to switch between the different kinds of movie lists that should be fetched
     const getMovies = async () => {
       try {
         const url = query
@@ -20,7 +22,6 @@ const FetchMovies = ({ movies, setMovies, query }) => {
         }
         const data = await response.json();
 
-        // Set the movies state
         if (!ignore) {
           setMovies(data.results);
         }
@@ -29,20 +30,31 @@ const FetchMovies = ({ movies, setMovies, query }) => {
       }
     };
 
-    // Finally, call function
     getMovies();
 
-
-    // Clean up
     return () => {
       ignore = true;
     };
-  }, [query]); // Dependency on changed query-value
-  
-  // Create the MovieCards
+  }, [query]);
+
+  const toggleFavorite = (movie) => {
+    const updatedFavorites = favorites.some((fav) => fav.id === movie.id)
+      ? favorites.filter((fav) => fav.id !== movie.id)
+      : [...favorites, movie];
+
+    setFavorites(updatedFavorites);
+    localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+  };
+
   return movies.map((movie) => {
+    const isFavorite = favorites.some((fav) => fav.id === movie.id);
     return (
-        <MovieCard key={movie.id} movie={movie} />
+      <MovieCard
+        key={movie.id}
+        movie={movie}
+        isFavorite={isFavorite}
+        toggleFavorite={toggleFavorite}
+      />
     );
   });
 };
