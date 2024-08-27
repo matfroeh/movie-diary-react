@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import MovieCard from "./MovieCard";
 
 const Journal = ({ favorites, setFavorites }) => {
@@ -31,7 +31,7 @@ const Journal = ({ favorites, setFavorites }) => {
       <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {favorites.map(movie => (
           <div key={movie.id} className="bg-gray-800 rounded-lg overflow-hidden shadow-lg p-4">
-            <MovieCard movie={movie} />
+            <MovieCard movie={movie} favorites={favorites} setFavorites={setFavorites}/>
             <textarea
               value={notes[movie.id] || ""}
               onChange={(e) => handleNoteChange(movie.id, e.target.value)}

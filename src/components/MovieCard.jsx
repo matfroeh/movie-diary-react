@@ -1,25 +1,43 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 
 const MovieCard = ({ movie, favorites, setFavorites }) => {
-  const [isFavorite, setIsFavorite] = useState(false);
+  // const [isFavorite, setIsFavorite] = useState(false);
   const [note, setNote] = useState("");
+  const isFavorite = favorites.some(fav => fav.id === movie.id);  
 
-  useEffect(() => {
-    // Check if the movie is in favorites
-    const savedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
-    setIsFavorite(savedFavorites.some(fav => fav.id === movie.id));
-  }, [movie.id]);
+  // useEffect(() => {
+  //   // Check if the movie is in favorites
+  //   // const savedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+  // THE CODE "setIsFavorite" BELOW WILL RE-RENDER THE PAGE EVERY TIME WHILE
+  // IT ITERATES THROUGH THE FAVORITES ARRAY (because setFunctions trigger a re-render) => Too many re-renders Error from react
+
+    // setIsFavorite(favorites.some(fav => fav.id === movie.id));
+  // }, [movie.id]);
+
+  // const toggleFavorite = () => {
+  //   let updatedFavorites;
+  //   if (isFavorite) {
+  //     updatedFavorites = favorites.filter(fav => fav.id !== movie.id);
+  //   } else {
+  //     updatedFavorites = [...favorites, movie];
+  //   }
+  //   setFavorites(updatedFavorites);
+  //   setIsFavorite(!isFavorite);
+  //   localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+  // };
 
   const toggleFavorite = () => {
-    let updatedFavorites;
     if (isFavorite) {
-      updatedFavorites = favorites.filter(fav => fav.id !== movie.id);
-    } else {
-      updatedFavorites = [...favorites, movie];
+      const updatedFavorites = favorites.filter((fav) => fav.id !== movie.id);
+      setFavorites(updatedFavorites);
+      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
     }
-    setFavorites(updatedFavorites);
-    setIsFavorite(!isFavorite);
-    localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+    else {
+      const updatedFavorites = [...favorites, movie];
+      setFavorites(updatedFavorites);
+      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+    }
   };
 
   const handleNoteChange = (e) => {

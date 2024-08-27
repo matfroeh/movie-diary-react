@@ -1,18 +1,24 @@
-import React, { useState } from 'react';
-import NavBar from './components/NavBar'; 
-import FetchMovies from './components/FetchMovies';
-import Journal from './components/Journal'; 
-import MovieCard from './components/MovieCard';
+import { useState } from "react";
+import NavBar from "./components/NavBar";
+import FetchMovies from "./components/FetchMovies";
+import Journal from "./components/Journal";
 
 const App = () => {
   const [movies, setMovies] = useState([]);
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState(
+    JSON.parse(localStorage.getItem("favorites")) || []
+  );
   const [showJournal, setShowJournal] = useState(false);
-  const [query, setQuery] = useState('');
-  
+  const [query, setQuery] = useState("");
+
   return (
     <>
-      <NavBar query={query} setQuery={setQuery} showJournal={showJournal} setShowJournal={setShowJournal} />
+      <NavBar
+        query={query}
+        setQuery={setQuery}
+        showJournal={showJournal}
+        setShowJournal={setShowJournal}
+      />
       <div
         className="bg-indigo-600 bg-cover"
         style={{ backgroundImage: `url('./Background.svg')` }}
@@ -24,7 +30,13 @@ const App = () => {
             className="grid sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4 px-6 py-6"
             id="card-container"
           >
-            <FetchMovies movies={movies} setMovies={setMovies} query={query} setFavorites={setFavorites} />
+            <FetchMovies
+              movies={movies}
+              setMovies={setMovies}
+              query={query}
+              favorites={favorites}
+              setFavorites={setFavorites}
+            />
           </div>
         )}
       </div>
