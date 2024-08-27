@@ -1,9 +1,7 @@
-
 import { useEffect } from "react";
 import MovieCard from "./MovieCard";
 
 const FetchMovies = ({ movies, setMovies, query, favorites, setFavorites }) => {
-  
   const apiKey = "434cdc6115c1cdc4355e3178cc63535a";
   // const [favorites, setFavorites] = useState(
   //   JSON.parse(localStorage.getItem("favorites")) || []
@@ -36,8 +34,9 @@ const FetchMovies = ({ movies, setMovies, query, favorites, setFavorites }) => {
     return () => {
       ignore = true;
     };
-  }, [query]); 
+  }, [query]);
 
+  
   // const toggleFavorite = (movie) => {
   //   const updatedFavorites = favorites.some((fav) => fav.id === movie.id)
   //     ? favorites.filter((fav) => fav.id !== movie.id)
@@ -49,12 +48,16 @@ const FetchMovies = ({ movies, setMovies, query, favorites, setFavorites }) => {
 
   return movies.map((movie) => {
     // const isFavorite = favorites.some((fav) => fav.id === movie.id);
+    // why passing down the constant "isFavorite" to the MovieCard component and then
+    // defining a own react state "isFavorites" in MovieCard.jsx?
     return (
       <MovieCard
-        key={movie.id}       
+        key={movie.id}
         movie={movie}
         // isFavorite={isFavorite}
         // toggleFavorite={toggleFavorite}
+        // What is the point in passing down the function "toggleFavorite" to the MovieCard component
+        // and then defining a similar function again in MovieCard.jsx?
         favorites={favorites}
         setFavorites={setFavorites}
       />
