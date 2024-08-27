@@ -9,7 +9,7 @@ const App = () => {
   const [favorites, setFavorites] = useState([]);
   const [showJournal, setShowJournal] = useState(false);
   const [query, setQuery] = useState('');
-
+  
   return (
     <>
       <NavBar query={query} setQuery={setQuery} showJournal={showJournal} setShowJournal={setShowJournal} />
