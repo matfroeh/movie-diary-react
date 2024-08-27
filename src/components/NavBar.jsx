@@ -1,6 +1,4 @@
 // src/components/NavBar.jsx
-import React from "react";
-
 const NavBar = ({ query, setQuery, showJournal, setShowJournal }) => {
   const handleSearch = (e) => {
     e.preventDefault();
