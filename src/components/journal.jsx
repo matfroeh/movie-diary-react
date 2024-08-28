@@ -56,11 +56,15 @@ const Journal = ({ favorites, setFavorites }) => {
 
     // does not work + localStorage needs to be updated
   const removeFromFavorites = (id) => {
-    setFavorites(favorites.filter((movie) => movie.id !== id));
+    const updatedFavorites = favorites.filter((movie) => movie.id !== id);
+    setFavorites(updatedFavorites);
+
     // Also clear note for removed movie <= not necessary as they are saved in the favorites array
-    const updatedNotes = { ...notes };
-    delete updatedNotes[id];
-    setNotes(updatedNotes);
+    // and the notes will be reloaded when changing again to journal page
+    // const updatedNotes = { ...notes };
+    // delete updatedNotes[id];
+    // setNotes(updatedNotes);
+    localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
   };
 
   return (
