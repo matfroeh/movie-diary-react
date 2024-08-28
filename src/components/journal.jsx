@@ -1,14 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MovieCard from "./MovieCard";
 
 const Journal = ({ favorites, setFavorites }) => {
   const [notes, setNotes] = useState({});
 
-  // does not work yet => infinity loop
-  favorites.map((fav) => {
-    console.log(fav.note);
-    if (fav.note) setNotes({ ...notes, [fav.id]: fav.note });
-  });
+  // initially set the notes state once by getting the saved note of each favorite movie item
+  useEffect(() => {
+    const savedNotes = {};
+    favorites.map((fav) => {
+      if (fav.note) savedNotes[fav.id] = fav.note;
+    });
+
+    setNotes(savedNotes);
+  }, []);
+
+  // does not work => infinity loop ==> work-around: see above with useEffect
+  // favorites.map((fav) => {
+  //   if (fav.note)
+
+  //     // setNotes({ ...notes, [fav.id]: fav.note });
+  //   }
+  // });
 
   const handleNoteChange = (e) => {
     setNotes({
@@ -38,20 +50,17 @@ const Journal = ({ favorites, setFavorites }) => {
     //     movie.id === id ? (movie.note = notes[id]) : movie;
     //     // so the note gets now saved in the movie object of the favorites list itself
     //     // but it also needs to be saved to localStorage, see below
-    //     console.log(movie);
-    //     console.log(movie.id);
-    //     console.log(notes[movie.id]);
     //   })
     // );
   };
 
+    // does not work + localStorage needs to be updated
   const removeFromFavorites = (id) => {
     setFavorites(favorites.filter((movie) => movie.id !== id));
-    // Also clear note for removed movie
+    // Also clear note for removed movie <= not necessary as they are saved in the favorites array
     const updatedNotes = { ...notes };
     delete updatedNotes[id];
     setNotes(updatedNotes);
-    // does not work + localStorage needs to be updated
   };
 
   return (
