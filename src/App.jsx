@@ -5,8 +5,6 @@ import Journal from "./components/Journal";
 
 const App = () => {
   const [movies, setMovies] = useState([]);
-  // the state "favorites" is now defined in App.jsx as it is needed both 
-  // in "Journal" and "FetchMovies" and now passed down as a prop to both components
   const [favorites, setFavorites] = useState(
     JSON.parse(localStorage.getItem("favorites")) || []
   );
