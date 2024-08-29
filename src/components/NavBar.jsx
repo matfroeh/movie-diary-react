@@ -1,9 +1,7 @@
-// src/components/NavBar.jsx
 const NavBar = ({ query, setQuery, showJournal, setShowJournal }) => {
+  
   const handleSearch = (e) => {
     e.preventDefault();
-    
-    // Implement search logic if needed
   };
 
   return (

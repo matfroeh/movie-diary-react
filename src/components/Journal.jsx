@@ -31,7 +31,6 @@ const Journal = ({ favorites, setFavorites }) => {
 
   const handleNoteSubmit = (id, e) => {
     e.preventDefault();
-    // Form should not be cleared as long as the note is not displayed somewhere else
 
     favorites.map((fav) => {
       if (fav.id === id) fav.note = notes[id];
@@ -39,31 +38,12 @@ const Journal = ({ favorites, setFavorites }) => {
 
     setFavorites(favorites);
     localStorage.setItem("favorites", JSON.stringify(favorites));
-
-    // using map within setting states does not work very well and
-    // gives errors when re-rendering the notes-textfield
-    // setFavorites(
-    //   favorites.map((movie) => {
-    //     // movie.id === id ? { ...movie, note: notes[id] } : movie;
-    //     // this does not work
-
-    //     movie.id === id ? (movie.note = notes[id]) : movie;
-    //     // so the note gets now saved in the movie object of the favorites list itself
-    //     // but it also needs to be saved to localStorage, see below
-    //   })
-    // );
   };
 
-    // does not work + localStorage needs to be updated
   const removeFromFavorites = (id) => {
     const updatedFavorites = favorites.filter((movie) => movie.id !== id);
     setFavorites(updatedFavorites);
 
-    // Also clear note for removed movie <= not necessary as they are saved in the favorites array
-    // and the notes will be reloaded when changing again to journal page
-    // const updatedNotes = { ...notes };
-    // delete updatedNotes[id];
-    // setNotes(updatedNotes);
     localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
   };
 
